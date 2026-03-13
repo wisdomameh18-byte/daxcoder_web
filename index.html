@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>DaxCoder — category workspaces</title>
+    <!-- Font & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ---------- global premium ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(155deg, #f6f9ff 0%, #eef2fc 100%);
+            color: #0d132a;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+        .gradient-soft {
+            background: radial-gradient(circle at 10% 20%, rgba(200, 210, 255, 0.25) 0%, transparent 40%),
+                        radial-gradient(circle at 90% 70%, rgba(170, 210, 250, 0.28) 0%, transparent 45%),
+                        linear-gradient(125deg, #ecf0fa 0%, #e3e9fc 100%);
+            backdrop-filter: blur(2px);
+        }
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 28px;
+        }
+        /* premium button */
+        .btn-premium {
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(10px);
+            padding: 0.9rem 2.2rem;
+            border-radius: 60px;
+            border: 1px solid rgba(255,255,255,0.7);
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #0f172a;
+            box-shadow: 0 20px 30px -12px rgba(30,40,80,0.1);
+            transition: 0.25s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .btn-premium i { color: #1f2e5a; }
+        .btn-premium:hover {
+            background: white;
+            box-shadow: 0 28px 34px -14px rgba(30,50,100,0.2);
+            transform: scale(1.01);
+            border-color: white;
+        }
+
+        /* header / logo */
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            background: linear-gradient(145deg, #0f2042, #1f3162);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .logo span {
+            background: #1f2e55;
+            padding: 5px 12px;
+            border-radius: 40px;
+            font-size: 1.2rem;
+            -webkit-text-fill-color: white;
+            color: white;
+            margin-left: 6px;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 28px 0;
+            flex-wrap: wrap;
+        }
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            font-weight: 600;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #1e2a4a;
+            transition: 0.2s;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 5px;
+        }
+        .nav-links a.active {
+            border-bottom-color: #4a6d9c;
+            font-weight: 700;
+        }
+        .nav-links a:hover { border-bottom-color: #607aa3; }
+
+        /* category hero */
+        .category-hero {
+            padding: 60px 0 20px;
+            text-align: center;
+        }
+        .category-hero h1 {
+            font-size: 4.2rem;
+            font-weight: 800;
+            letter-spacing: -3px;
+            color: #0e1a2f;
+            line-height: 1.1;
+        }
+        .hero-desc {
+            font-size: 1.25rem;
+            color: #2c3b5c;
+            max-width: 650px;
+            margin: 20px auto;
+        }
+
+        /* ---------- dedicated filter bar (for each page) ---------- */
+        .sub-filter-bar {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 40px 0 30px;
+        }
+        .sub-filter-btn {
+            background: rgba(255,255,255,0.55);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.7);
+            padding: 12px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            color: #1f284a;
+            transition: all 0.2s;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .sub-filter-btn.active {
+            background: white;
+            box-shadow: 0 16px 24px -12px rgba(30,40,80,0.15);
+            font-weight: 700;
+            color: #0b1224;
+            border: 1px solid white;
+        }
+        .sub-filter-btn i { color: #334a70; }
+
+        /* project gallery - card premium */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 32px;
+            margin: 30px 0 80px;
+        }
+        .project-card {
+            background: rgba(255,255,255,0.65);
+            backdrop-filter: blur(12px);
+            border-radius: 36px;
+            padding: 28px 22px;
+            border: 1px solid rgba(255,255,255,0.8);
+            box-shadow: 0 18px 32px -16px rgba(26,34,60,0.08);
+            transition: 0.3s cubic-bezier(0.16, 1, 0.22, 1);
+            display: flex;
+            flex-direction: column;
+            border-bottom: 3px solid rgba(255,255,255,0.7);
+        }
+        .project-card:hover {
+            background: rgba(255,255,255,0.85);
+            box-shadow: 0 36px 44px -22px rgba(28,45,80,0.18);
+            transform: translateY(-6px);
+        }
+        .project-icon {
+            font-size: 2.6rem;
+            margin-bottom: 12px;
+            color: #1a2b4e;
+        }
+        .project-title {
+            font-size: 1.7rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            color: #0a142c;
+        }
+        .project-sub {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #3e5580;
+            margin-bottom: 12px;
+        }
+        .project-desc {
+            font-weight: 500;
+            color: #263151;
+            margin-bottom: 20px;
+        }
+        .project-badge {
+            margin-top: auto;
+            background: rgba(240,246,255,0.7);
+            padding: 7px 18px;
+            border-radius: 50px;
+            display: inline-block;
+            align-self: flex-start;
+            font-size: 0.9rem;
+            font-weight: 600;
+            backdrop-filter: blur(4px);
+            border: 0.5px solid white;
+            color: #1a2f4e;
+        }
+
+        /* ------- whatsapp form ------- */
+        .whatsapp-premium {
+            background: rgba(255,255,255,0.5);
+            backdrop-filter: blur(14px);
+            border-radius: 64px;
+            padding: 60px 48px;
+            margin: 60px 0 70px;
+            border: 1px solid rgba(255,255,255,0.8);
+            box-shadow: 0 30px 40px -20px rgba(20,40,70,0.12);
+        }
+        .wa-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+        }
+        .wa-left {
+            flex: 1 1 260px;
+        }
+        .wa-left h2 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            letter-spacing: -2px;
+            color: #0c1730;
+            margin-bottom: 20px;
+        }
+        .wa-number {
+            background: rgba(0,0,0,0.02);
+            padding: 14px 22px;
+            border-radius: 100px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #0f1e38;
+            border: 1px solid rgba(255,255,255,0.7);
+            display: inline-block;
+            margin: 10px 0;
+        }
+        .wa-number i { color: #1a4e3d; margin-right: 10px; }
+        .form-card {
+            flex: 1 1 360px;
+            background: rgba(255,255,255,0.55);
+            backdrop-filter: blur(16px);
+            padding: 36px 32px;
+            border-radius: 48px;
+            border: 1px solid rgba(255,255,255,0.7);
+        }
+        .input-group {
+            margin-bottom: 22px;
+        }
+        .input-group label {
+            font-weight: 600;
+            color: #162141;
+            margin-bottom: 6px;
+            display: block;
+        }
+        .input-field {
+            width: 100%;
+            background: rgba(255,255,255,0.7);
+            border: 1px solid rgba(210,220,240,0.9);
+            border-radius: 44px;
+            padding: 16px 22px;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .input-field:focus {
+            border-color: #4f6fa3;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(90,120,200,0.08);
+        }
+        textarea.input-field {
+            min-height: 110px;
+            border-radius: 28px;
+        }
+        .btn-wa {
+            background: #1c2a4a;
+            color: white;
+            width: 100%;
+            padding: 18px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            border: none;
+            transition: 0.2s;
+            border: 1px solid rgba(255,255,255,0.2);
+            cursor: pointer;
+        }
+        .btn-wa i { font-size: 1.6rem; }
+        .btn-wa:hover {
+            background: #101d38;
+            transform: scale(1.01);
+        }
+        footer {
+            padding: 50px 0 40px;
+            text-align: center;
+            color: #2b3a62;
+            border-top: 1px solid rgba(255,255,255,0.7);
+            backdrop-filter: blur(6px);
+        }
+        .fade-up {
+            animation: fadeUp 0.7s ease both;
+        }
+        @keyframes fadeUp {
+            0% { opacity: 0; transform: translateY(18px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 700px) {
+            .category-hero h1 { font-size: 2.8rem; }
+        }
+    </style>
+</head>
+<body class="gradient-soft">
+    <div class="container">
+
+        <!-- ========== SAME HEADER ========== -->
+        <header class="fade-up">
+            <div class="logo">DaxCoder<span>™</span></div>
+            <div class="nav-links">
+                <a href="#" class="nav-home" data-page="home">Home</a>
+                <a href="#" class="nav-web" data-page="web">Web</a>
+                <a href="#" class="nav-graphics" data-page="graphics">Graphics</a>
+                <a href="#" class="nav-programming" data-page="programming">Programming</a>
+            </div>
+        </header>
+
+        <!-- ========== DYNAMIC PAGE CONTENT ========== -->
+        <div id="page-content"></div>
+
+        <!-- ========== WHATSAPP FORM (GLOBAL, appears on every page) ========== -->
+        <div class="whatsapp-premium fade-up" id="whatsapp-global">
+            <div class="wa-grid">
+                <div class="wa-left">
+                    <h2>Auto message <br>via WhatsApp</h2>
+                    <div class="wa-number">
+                        <i class="fas fa-phone-alt"></i> +234 701 519 5779
+                    </div>
+                    <p style="color: #1a2748; font-size: 1.1rem; margin-top: 20px; font-weight: 500;">
+                        Web, logo, flyer, code — tell me your idea.
+                    </p>
+                </div>
+                <div class="form-card">
+                    <div style="margin-bottom: 12px;"><span style="background: #dee8fc; padding: 6px 24px; border-radius: 50px; font-weight: 600;"><i class="fab fa-whatsapp" style="color:#1e4a3b;"></i> real auto‑form</span></div>
+                    <form id="waFormGlobal">
+                        <div class="input-group">
+                            <label>Your name</label>
+                            <input type="text" class="input-field" id="waName" placeholder="e.g. Michael" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Service category</label>
+                            <select class="input-field" id="waService">
+                                <option value="website">🌐 Website</option>
+                                <option value="logo">🎨 Logo design</option>
+                                <option value="flyer">📄 Flyer / branding</option>
+                                <option value="programming">⚙️ Programming</option>
+                                <option value="other">✨ Other</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Project details</label>
+                            <textarea class="input-field" id="waMessage" placeholder="Describe your vision..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-wa">
+                            <i class="fab fa-whatsapp"></i> Send now
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <footer class="fade-up">
+            <div style="display: flex; gap: 28px; justify-content: center; margin-bottom: 20px;">
+                <span style="font-weight: 700;"><i class="fab fa-github"></i> DaxCoder</span>
+                <span style="font-weight: 700;"><i class="fab fa-behance"></i> Dax.Graphics</span>
+                <span style="font-weight: 700;"><i class="fab fa-dribbble"></i> dax.codes</span>
+            </div>
+            <p>© 2025 DaxCoder — Brought to you by Ameh Wisdom (DaxCoder) • Graphics • Programming galleries. <br> WhatsApp auto +234 701 519 5779</p>
+        </footer>
+    </div>
+
+    <script>
+        (function(){
+            // ---------- MEGA DATABASE: projects for each category (Web, Graphics, Programming) ----------
+            // each entry has category, plus subFilter for more granular (e.g., 'logo', 'flyer', 'webApp', 'api' ...)
+            const allProjects = [
+                // ---------- WEB projects (15+ projects) ----------
+                { id:1, title:"NexaBank", mainCategory:"web", subFilter:"website", icon:"fa-solid fa-globe", desc:"Modern banking site with micro-interactions", tag:"corporate web" },
+                { id:2, title:"UrbanEats", mainCategory:"web", subFilter:"restaurant", icon:"fa-solid fa-utensils", desc:"Restaurant booking & brand experience", tag:"food & beverage" },
+                { id:3, title:"Void.tech", mainCategory:"web", subFilter:"saas", icon:"fa-solid fa-cloud", desc:"SaaS landing page, 40% conversion lift", tag:"cloud platform" },
+                { id:4, title:"SwiftCargo", mainCategory:"web", subFilter:"logistics", icon:"fa-solid fa-truck-fast", desc:"Live tracking dashboard + client portal", tag:"logistics webapp" },
+                { id:5, title:"Artemis", mainCategory:"web", subFilter:"portfolio", icon:"fa-solid fa-camera", desc:"Photographer portfolio with lightbox", tag:"creative" },
+                { id:6, title:"Finwise", mainCategory:"web", subFilter:"finance", icon:"fa-solid fa-chart-line", desc:"Investment advisor UI", tag:"fintech" },
+                { id:7, title:"FitHub", mainCategory:"web", subFilter:"health", icon:"fa-solid fa-heart-pulse", desc:"Wellness platform & class booking", tag:"health + fit" },
+                { id:8, title:"AcademyX", mainCategory:"web", subFilter:"education", icon:"fa-solid fa-graduation-cap", desc:"E‑learning dashboard", tag:"edtech" },
+                { id:9, title:"Storefront", mainCategory:"web", subFilter:"ecommerce", icon:"fa-solid fa-cart-shopping", desc:"Minimalist fashion e‑commerce", tag:"shop" },
+                { id:10, title:"RealtyOne", mainCategory:"web", subFilter:"realestate", icon:"fa-solid fa-building", desc:"Property listings with 3D tours", tag:"real estate" },
+                { id:11, title:"Eventio", mainCategory:"web", subFilter:"events", icon:"fa-solid fa-calendar", desc:"Conference registration & schedule", tag:"event management" },
+                { id:12, title:"StartupLab", mainCategory:"web", subFilter:"startup", icon:"fa-solid fa-rocket", desc:"Pitch deck website for VC", tag:"startup" },
+                { id:13, title:"NewsGrid", mainCategory:"web", subFilter:"publishing", icon:"fa-solid fa-newspaper", desc:"Modern magazine layout", tag:"media" },
+                { id:14, title:"GreenTech", mainCategory:"web", subFilter:"sustainable", icon:"fa-solid fa-leaf", desc:"Eco solutions co. website", tag:"green energy" },
+                { id:15, title:"AgencyPeak", mainCategory:"web", subFilter:"agency", icon:"fa-solid fa-bezier-curve", desc:"Creative agency showreel", tag:"digital agency" },
+
+                // ---------- GRAPHICS projects (logos, flyers, branding) — 15 projects ----------
+                { id:16, title:"Horizon", mainCategory:"graphics", subFilter:"logo", icon:"fa-solid fa-paintbrush", desc:"Abstract logo for travel startup", tag:"logo design" },
+                { id:17, title:"EcoFlyers", mainCategory:"graphics", subFilter:"flyer", icon:"fa-solid fa-image", desc:"Environmental flyer series", tag:"flyer print" },
+                { id:18, title:"Bloom Cosmetics", mainCategory:"graphics", subFilter:"brand", icon:"fa-solid fa-sparkles", desc:"Luxury visual identity & logo", tag:"branding" },
+                { id:19, title:"Metropolis 3D", mainCategory:"graphics", subFilter:"logo", icon:"fa-solid fa-cubes", desc:"3D animated logo & deck", tag:"motion logo" },
+                { id:20, title:"Café Noir", mainCategory:"graphics", subFilter:"brand", icon:"fa-solid fa-mug-saucer", desc:"Coffee shop brand + menu flyer", tag:"brand identity" },
+                { id:21, title:"TechFest", mainCategory:"graphics", subFilter:"flyer", icon:"fa-solid fa-ticket", desc:"Event flyer & social banners", tag:"event graphics" },
+                { id:22, title:"Verdant", mainCategory:"graphics", subFilter:"logo", icon:"fa-solid fa-seedling", desc:"Organic food logo", tag:"logo" },
+                { id:23, title:"Summit Speaker", mainCategory:"graphics", subFilter:"flyer", icon:"fa-solid fa-people-group", desc:"Conference flyer A4", tag:"flyer" },
+                { id:24, title:"Aether Drone", mainCategory:"graphics", subFilter:"logo", icon:"fa-solid fa-helicopter", desc:"Tech drone logo", tag:"logo design" },
+                { id:25, title:"Fashion Lookbook", mainCategory:"graphics", subFilter:"print", icon:"fa-solid fa-book-open", desc:"Editorial lookbook", tag:"print layout" },
+                { id:26, title:"JuiceLab", mainCategory:"graphics", subFilter:"brand", icon:"fa-solid fa-flask", desc:"Smoothie brand kit", tag:"branding" },
+                { id:27, title:"Real Estate Pro", mainCategory:"graphics", subFilter:"flyer", icon:"fa-solid fa-house", desc:"Property flyer template", tag:"flyer" },
+                { id:28, title:"NeoBank card", mainCategory:"graphics", subFilter:"print", icon:"fa-solid fa-credit-card", desc:"Card & stationary design", tag:"print" },
+                { id:29, title:"Podcast cover", mainCategory:"graphics", subFilter:"digital", icon:"fa-solid fa-podcast", desc:"Illustrative podcast art", tag:"cover art" },
+                { id:30, title:"Infographic Kit", mainCategory:"graphics", subFilter:"info", icon:"fa-solid fa-chart-pie", desc:"Data viz graphics", tag:"infographic" },
+
+                // ---------- PROGRAMMING projects (15 projects) ----------
+                { id:31, title:"FrostByte AI", mainCategory:"programming", subFilter:"ai-ml", icon:"fa-solid fa-brain", desc:"Analytics dashboard + Python backend", tag:"machine learning" },
+                { id:32, title:"DevForge", mainCategory:"programming", subFilter:"api", icon:"fa-solid fa-terminal", desc:"REST API toolkit & docs", tag:"backend" },
+                { id:33, title:"Quantum Core", mainCategory:"programming", subFilter:"iot", icon:"fa-solid fa-microchip", desc:"Edge simulator UI", tag:"IoT" },
+                { id:34, title:"NeoCode", mainCategory:"programming", subFilter:"extension", icon:"fa-solid fa-cpu", desc:"VS Code productivity extension", tag:"developer tool" },
+                { id:35, title:"BlockVote", mainCategory:"programming", subFilter:"blockchain", icon:"fa-solid fa-link", desc:"E‑voting smart contract", tag:"web3" },
+                { id:36, title:"MediTrack", mainCategory:"programming", subFilter:"healthtech", icon:"fa-solid fa-hospital", desc:"Patient record system (FHIR)", tag:"healthcare" },
+                { id:37, title:"ShopSwift", mainCategory:"programming", subFilter:"mobile", icon:"fa-solid fa-mobile-screen", desc:"React Native e‑commerce", tag:"mobile app" },
+                { id:38, title:"DataPulse", mainCategory:"programming", subFilter:"data", icon:"fa-solid fa-chart-simple", desc:"Real-time analytics engine", tag:"big data" },
+                { id:39, title:"Cloud9 IDE", mainCategory:"programming", subFilter:"devops", icon:"fa-solid fa-cloud-arrow-up", desc:"Browser-based code editor", tag:"dev environment" },
+                { id:40, title:"AuthFlow", mainCategory:"programming", subFilter:"security", icon:"fa-solid fa-shield", desc:"OAuth2 provider", tag:"security" },
+                { id:41, title:"GameForge", mainCategory:"programming", subFilter:"game", icon:"fa-solid fa-gamepad", desc:"Unity mini‑game framework", tag:"game dev" },
+                { id:42, title:"Portfolio CMS", mainCategory:"programming", subFilter:"cms", icon:"fa-solid fa-database", desc:"Headless CMS for creatives", tag:"full-stack" },
+                { id:43, title:"ML ImageTag", mainCategory:"programming", subFilter:"ai-ml", icon:"fa-solid fa-tag", desc:"Image classifier API", tag:"computer vision" },
+                { id:44, title:"ChatKit", mainCategory:"programming", subFilter:"realtime", icon:"fa-solid fa-comment-dots", desc:"Socket.io chat widget", tag:"realtime" },
+                { id:45, title:"AstroLaunch", mainCategory:"programming", subFilter:"automation", icon:"fa-solid fa-robot", desc:"CI/CD pipeline tool", tag:"automation" }
+            ];
+
+            // ---------- get page container ----------
+            const pageContent = document.getElementById('page-content');
+
+            // ---------- navigation: render page based on category (home, web, graphics, programming) ----------
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            // function to set active nav
+            function setActive(pageId) {
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    const dataPage = link.dataset.page;
+                    if (dataPage === pageId) link.classList.add('active');
+                });
+            }
+
+            // ---------- render HOME (landing + featured from all categories) ----------
+            function renderHome() {
+                setActive('home');
+                const featured = allProjects.filter(p => p.id % 5 === 0).slice(0, 6); // showcase
+                let html = `
+                    <div class="category-hero fade-up">
+                        <h1 style="font-size:5rem;">DaxCoder</h1>
+                        <div class="hero-desc">Web · Graphics · Programming — premium work, auto connected.</div>
+                        <button class="btn-premium" style="margin-top:12px;" id="exploreBtn"><i class="fas fa-compass"></i> Explore categories</button>
+                    </div>
+                    <!-- featured section -->
+                    <div style="display:flex; justify-content: space-between; align-items: baseline;">
+                        <h2 style="font-size:2.2rem; font-weight:700; letter-spacing:-2px; color:#121c34;">⌕ recent icons</h2>
+                        <span style="background: rgba(255,255,255,0.5); padding:6px 24px; border-radius: 60px;">all premium</span>
+                    </div>
+                    <div class="projects-grid">
+                `;
+                featured.forEach(p => {
+                    let catIcon = p.mainCategory === 'web' ? 'fa-globe' : (p.mainCategory === 'graphics' ? 'fa-palette' : 'fa-code');
+                    html += `<div class="project-card">
+                        <div class="project-icon"><i class="fas ${catIcon}"></i> <i class="${p.icon}" style="margin-left:6px;"></i></div>
+                        <div class="project-title">${p.title}</div>
+                        <div class="project-sub">${p.mainCategory.toUpperCase()}  •  ${p.subFilter}</div>
+                        <div class="project-desc">${p.desc}</div>
+                        <span class="project-badge"><i class="fa-regular fa-bookmark"></i> ${p.tag}</span>
+                    </div>`;
+                });
+                html += `</div>`;
+                pageContent.innerHTML = html;
+                document.getElementById('exploreBtn')?.addEventListener('click', ()=>{ renderWeb(); });
+            }
+
+            // ---------- render WEB page (with subfilters) ----------
+            function renderWeb() {
+                setActive('web');
+                renderCategoryPage('web', 'Web development', 'Websites, web apps, e‑commerce, portals — all crafted with modern stack');
+            }
+
+            function renderGraphics() {
+                setActive('graphics');
+                renderCategoryPage('graphics', 'Graphics & branding', 'Logos, flyers, brand identity, print and digital');
+            }
+
+            function renderProgramming() {
+                setActive('programming');
+                renderCategoryPage('programming', 'Programming & tools', 'APIs, AI, mobile apps, developer utilities');
+            }
+
+            // generic render for any main category
+            function renderCategoryPage(categoryKey, headline, descText) {
+                let projects = allProjects.filter(p => p.mainCategory === categoryKey);
+                // unique subfilters for this category
+                let subFilters = [...new Set(projects.map(p => p.subFilter))];
+                
+                let html = `
+                    <div class="category-hero fade-up">
+                        <h1>${headline}</h1>
+                        <div class="hero-desc">${descText}</div>
+                    </div>
+                    <!-- sub filters for this category -->
+                    <div class="sub-filter-bar" id="subFilterBar">
+                        <button class="sub-filter-btn active" data-subfilter="all"><i class="fas fa-layer-group"></i> All ${categoryKey}</button>
+                        ${subFilters.map(sf => `<button class="sub-filter-btn" data-subfilter="${sf}"><i class="fas fa-tag"></i> ${sf}</button>`).join('')}
+                    </div>
+                    <div class="projects-grid" id="categoryGrid"></div>
+                `;
+                pageContent.innerHTML = html;
+
+                // render all projects first
+                const grid = document.getElementById('categoryGrid');
+                function renderSubFiltered(filterVal) {
+                    let filtered = projects;
+                    if (filterVal !== 'all') {
+                        filtered = projects.filter(p => p.subFilter === filterVal);
+                    }
+                    let cards = '';
+                    filtered.forEach(p => {
+                        cards += `<div class="project-card">
+                            <div class="project-icon"><i class="${p.icon}"></i></div>
+                            <div class="project-title">${p.title}</div>
+                            <div class="project-sub">${p.subFilter}  •  ${p.tag}</div>
+                            <div class="project-desc">${p.desc}</div>
+                            <span class="project-badge"><i class="fa-regular fa-bookmark"></i> ${p.tag}</span>
+                        </div>`;
+                    });
+                    grid.innerHTML = cards;
+                }
+                renderSubFiltered('all');
+
+                // attach subfilter events
+                const subBtns = document.querySelectorAll('.sub-filter-btn');
+                subBtns.forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        subBtns.forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        const filter = this.dataset.subfilter;
+                        renderSubFiltered(filter);
+                    });
+                });
+            }
+
+            // ---------- initial load: home ----------
+            renderHome();
+
+            // ---------- navigation listeners ----------
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const page = this.dataset.page;
+                    if (page === 'home') renderHome();
+                    if (page === 'web') renderWeb();
+                    if (page === 'graphics') renderGraphics();
+                    if (page === 'programming') renderProgramming();
+                });
+            });
+
+            // ---------- GLOBAL WHATSAPP AUTO FORM (works on all pages) ----------
+            const waGlobal = document.getElementById('waFormGlobal');
+            if (waGlobal) {
+                waGlobal.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const name = document.getElementById('waName').value.trim() || 'Client';
+                    const service = document.getElementById('waService').value;
+                    const msg = document.getElementById('waMessage').value.trim() || 'Let’s discuss my project';
+                    
+                    let servicePretty = '';
+                    switch(service) {
+                        case 'website': servicePretty = '🌐 Website'; break;
+                        case 'logo': servicePretty = '🎨 Logo'; break;
+                        case 'flyer': servicePretty = '📄 Flyer/branding'; break;
+                        case 'programming': servicePretty = '⚙️ Programming'; break;
+                        default: servicePretty = '✨ Other';
+                    }
+                    const fullText = `Hello DaxCoder! I'm ${name}.%0A%0A*Service:* ${servicePretty}%0A*Message:* ${msg}%0A%0A— via DaxCoder auto form`;
+                    window.open(`https://wa.me/2347015195779?text=${fullText}`, '_blank');
+                    
+                    const btn = waGlobal.querySelector('button[type="submit"]');
+                    btn.innerHTML = '<i class="fab fa-whatsapp"></i> Opening...';
+                    setTimeout(() => { btn.innerHTML = '<i class="fab fa-whatsapp"></i> Send now'; }, 2000);
+                });
+            }
+        })();
+    </script>
+    <!-- small patch: ensure wa number visible and active -->
+    <style>
+        .wa-number i, .btn-wa i { color: #25D366; }
+        .nav-links a.active { border-bottom: 3px solid #3f5f8c; }
+        .project-card { border: 1px solid rgba(255,255,255,0.7); }
+    </style>
+</body>
+</html>
